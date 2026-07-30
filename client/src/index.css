@@ -1,0 +1,25 @@
+ @import "tailwindcss";
+
+body{
+    margin:0;
+    padding:0;
+    font-family:'Poppins',sans-serif;
+    background:#f8fafc;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+a{
+    text-decoration:none;
+}
+
+button{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+img{
+    max-width:100%;
+}
