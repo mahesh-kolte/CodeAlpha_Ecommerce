@@ -23,115 +23,145 @@ function Orders() {
     }
   };
 
-  const getStatusColor = (status) => {
+  const getStatusStyle = (status) => {
     switch (status) {
       case "Pending":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200";
       case "Processing":
-        return "bg-blue-100 text-blue-700";
+        return "bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-200";
       case "Shipped":
-        return "bg-purple-100 text-purple-700";
+        return "bg-violet-50 text-violet-700 ring-1 ring-inset ring-violet-200";
       case "Delivered":
-        return "bg-green-100 text-green-700";
+        return "bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200";
       case "Cancelled":
-        return "bg-red-100 text-red-700";
+        return "bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-200";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200";
+    }
+  };
+
+  const getStatusDot = (status) => {
+    switch (status) {
+      case "Pending":
+        return "bg-amber-500";
+      case "Processing":
+        return "bg-sky-500";
+      case "Shipped":
+        return "bg-violet-500";
+      case "Delivered":
+        return "bg-emerald-500";
+      case "Cancelled":
+        return "bg-rose-500";
+      default:
+        return "bg-slate-400";
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
-      <h1 className="text-4xl font-bold text-slate-800 mb-10">
-        My Orders
-      </h1>
+    <div className="max-w-5xl mx-auto px-6 py-12">
+      <div className="mb-10">
+        <p className="text-sm font-medium text-indigo-600 tracking-wide uppercase mb-1">
+          Your account
+        </p>
+        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+          My Orders
+        </h1>
+        <p className="text-slate-500 mt-2">
+          {orders.length > 0
+            ? `${orders.length} order${orders.length > 1 ? "s" : ""} placed so far`
+            : "Track and review everything you've bought"}
+        </p>
+      </div>
 
       {orders.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-          <FaBoxOpen className="mx-auto text-6xl text-gray-400 mb-4" />
-          <h2 className="text-2xl font-semibold text-gray-700">
-            No Orders Yet
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-16 text-center">
+          <div className="mx-auto w-20 h-20 rounded-2xl bg-indigo-50 flex items-center justify-center mb-5">
+            <FaBoxOpen className="text-3xl text-indigo-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-800">
+            No orders yet
           </h2>
-          <p className="text-gray-500 mt-2">
-            Start shopping to see your orders here.
+          <p className="text-slate-500 mt-2 max-w-sm mx-auto">
+            Once you place an order, it'll show up here with live status and delivery details.
           </p>
         </div>
       ) : (
-        <div className="space-y-8">
+        <div className="space-y-6">
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-white rounded-2xl shadow-lg border p-6"
+              className="group bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-slate-100 overflow-hidden"
             >
               {/* Header */}
-              <div className="flex flex-col md:flex-row md:justify-between md:items-center border-b pb-4 mb-5">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 px-6 py-5 bg-slate-50/60 border-b border-slate-100">
                 <div>
-                  <p className="text-gray-500 text-sm">Order ID</p>
-                  <h2 className="font-semibold text-lg">
+                  <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+                    Order
+                  </p>
+                  <h2 className="font-mono font-semibold text-slate-800 text-lg">
                     #{order._id.slice(-8)}
                   </h2>
-
-                  <p className="text-gray-500 text-sm mt-2">
-                    {new Date(order.createdAt).toLocaleDateString("en-IN")}
+                  <p className="text-slate-400 text-sm mt-1">
+                    {new Date(order.createdAt).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </p>
                 </div>
 
-                <div className="text-right mt-4 md:mt-0">
+                <div className="flex flex-row md:flex-col items-start md:items-end justify-between gap-2">
                   <span
-                    className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${getStatusStyle(
                       order.status
                     )}`}
                   >
+                    <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(order.status)}`} />
                     {order.status}
                   </span>
-
-                  <h3 className="text-2xl font-bold mt-3 text-blue-600">
+                  <h3 className="text-2xl font-bold text-slate-900">
                     ₹{order.totalPrice}
                   </h3>
                 </div>
               </div>
 
               {/* Products */}
-              <div className="space-y-4">
+              <div className="divide-y divide-slate-50">
                 {order.items.map((item, index) => (
                   <div
                     key={`${order._id}-${index}`}
-                    className="flex items-center justify-between border rounded-xl p-4"
+                    className="flex items-center justify-between px-6 py-4 hover:bg-slate-50/50 transition-colors"
                   >
                     <div className="flex items-center gap-4">
                       {item.product?.image ? (
                         <img
                           src={item.product.image}
                           alt={item.product.name}
-                          className="w-20 h-20 rounded-lg object-cover border"
+                          className="w-16 h-16 rounded-xl object-cover border border-slate-100"
                         />
                       ) : (
-                        <div className="w-20 h-20 rounded-lg bg-gray-200 flex items-center justify-center">
-                          ❌
+                        <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center text-slate-300">
+                          <FaBoxOpen className="text-xl" />
                         </div>
                       )}
 
                       <div>
-                        <h3 className="font-semibold text-lg">
-                          {item.product?.name || "Product Deleted"}
+                        <h3 className="font-semibold text-slate-800">
+                          {item.product?.name || "Product deleted"}
                         </h3>
-
-                        <p className="text-gray-500">
-                          Quantity : {item.quantity}
+                        <p className="text-slate-400 text-sm">
+                          Qty {item.quantity}
+                          {item.product && (
+                            <span className="text-slate-400"> · ₹{item.product.price} each</span>
+                          )}
                         </p>
-
-                        {item.product && (
-                          <p className="font-bold text-blue-600">
-                            ₹{item.product.price}
-                          </p>
-                        )}
                       </div>
                     </div>
 
                     {item.product && (
-                      <h3 className="font-bold text-lg">
+                      <span className="font-bold text-slate-900">
                         ₹{item.product.price * item.quantity}
-                      </h3>
+                      </span>
                     )}
                   </div>
                 ))}

@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import ProductDetails from "./pages/ProductDetails";
+import Products from "./pages/Products";
 import Checkout from "./pages/Checkout";
 import Wishlist from "./pages/Wishlist";
 import PaymentSuccess from "./pages/PaymentSuccess";
@@ -22,7 +23,7 @@ import EditProduct from "./pages/Admin/EditProduct";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminUsers from "./pages/Admin/AdminUsers";
-
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <>
@@ -33,8 +34,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-
+<Route path="*" element={<NotFound />} />
         {/* User Routes */}
         <Route
           path="/cart"

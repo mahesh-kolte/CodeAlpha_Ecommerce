@@ -154,15 +154,21 @@ function AddProduct() {
       Category
     </label>
 
-    <input
-      type="text"
+    <select
       name="category"
       value={product.category}
       onChange={handleChange}
-      placeholder="Electronics"
-      className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 bg-white"
       required
-    />
+    >
+      <option value="">Select Category</option>
+      <option value="Laptops">Laptops</option>
+      <option value="Mobiles">Mobiles</option>
+      <option value="Fashion">Fashion</option>
+      <option value="Shoes">Shoes</option>
+      <option value="Watches">Watches</option>
+      <option value="Accessories">Accessories</option>
+    </select>
   </div>
 
 </div>
@@ -378,5 +384,3 @@ function AddProduct() {
 }
 
 export default AddProduct;
-      
-        
